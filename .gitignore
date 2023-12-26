@@ -2,7 +2,8 @@
 *.Rproj
 .Rhistory
 .RData
-data
+data/
 results/
 *cycles/
-*.txt
+qc/
+kraken_report
