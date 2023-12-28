@@ -1,0 +1,57 @@
+###############################################################
+Description of data: 
+whole genome shotgun sequence paired end reads: 
+##################################################################
+### Tools installed: 
+install conda 
+install seqkit
+install fastqc in conda in fastqc environment (create env in conda for fastqc tool to install)
+To activate this environment, use
+# $ conda activate fastqc
+#
+# To deactivate an active environment, use
+#
+# $ conda deactivate
+install trimomatatic in conda (for trimming reads )
+install kraken2 in conda 
+install multiqc in conda bioconda 
+                                                             
+###########################################################
+
+Analysis
+
+mkdir qc (to store fastqc file) 
+1. fastqc 
+### fastqc -o qc ##path to data
+example: 
+fastqc -o qc data/Microbial_P2_100cycles/*.fastq.gz
+
+2. multiqc 
+### to run multiqc present in current directory
+ .multiqc
+
+3. trimmed reads 
+Using adapter seq. trimm if their is any adapter contamination and low quality reads.  
+
+trimmomatic PE -phred33 fastq_file/path ILLUMINACLIP:adapter.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:50
+
+4. run kraken2 tool in trimmed reads 
+
+kraken2 --db /path/to/database --report desire_name.report--paired --gzip-compressed path/to/trimmed_data > desire_name.kraken
+
+example: 
+kraken2 --db /home/kiran/Downloads/minikraken2_v2_8GB_201904_UPDATE --report 300cycle.report --paired --gzip-compressed  Microbial_P2_300cycles/R9-ZymoMCS_S46_L001_R1_001.fastq.gz  Microbial_P2_300cycles/R9-ZymoMCS_S46_L001_R2_001.fastq.gz > 300cycle.kraken
+
+kraken2 --db /home/kiran/Downloads/minikraken2_v2_8GB_201904_UPDATE --report 100cycle.report --paired --gzip-compressed  Microbial_P2_100cycles/R8-ZymoMCS_S46_L001_R1_001.fastq.gz  Microbial_P2_100cycles/R8-ZymoMCS_S46_L001_R2_001.fastq.gz > 100cycle.kraken
+
+###########################################
+## check output 
+cat 100cycle.report | awk ' $2>100 && $4=="S" { print $0} ' | wc -l
+160
+$ cat 300cycle.report | awk ' $2>100 && $4=="S" { print $0} ' | wc -l
+138
+
+################################################# 
+
+## generate report in R  using R - code 
+
