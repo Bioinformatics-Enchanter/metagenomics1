@@ -5,6 +5,6 @@
 data
 results/
 *cycles/
-qc/
-kraken_report
+qc_before_trim/
+kraken_report_before_trim/
 .txt
