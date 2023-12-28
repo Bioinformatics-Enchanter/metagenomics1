@@ -9,3 +9,7 @@ qc_before_trim/
 kraken_report_before_trim/
 note.txt
 report.txt
+qc/
+kraken_report
+.txt
+
