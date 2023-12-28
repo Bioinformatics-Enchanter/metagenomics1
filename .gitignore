@@ -7,4 +7,5 @@ results/
 *cycles/
 qc_before_trim/
 kraken_report_before_trim/
-.txt
+note.txt
+report.txt
