@@ -13,11 +13,21 @@ head(kreport)
 nrow(kreport)
 ncol(kreport) 
 
+## filter reads
+filter_300cycle <- subset(kreport, readsRooted > 10000 & taxRank == "S")
+
+################################################
+write.table(filter_300cycle, 
+            file = 'filter_300cycle.report', 
+            sep = '\t', 
+            row.names = FALSE)
+
+#### Plot krona using this reoprt #########
+############################################################################
 ## counting total number of reads in the sample
 total_reads <- sum(kreport$reads)
 #calculate relative abundance 
 kreport$relative_abundance <- kreport$reads / total_reads
-
 
 # Filter rows with reads Rooted is greater than 10,000, less than 1 % and only Species(S)
 filtered_kreport <- kreport %>%
